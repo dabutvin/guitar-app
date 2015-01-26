@@ -11,7 +11,7 @@ var mode = "read-only";
 /* GET home page. */
 router.get('/', function(req, res) {
   if (mode === "read-only") {
-    readFromFile("bin/cache", function(items) {
+    readFromFile("cache", function(items) {
       res.render('index',
         { title: 'Guitar Tabssss',
           songs: JSON.parse(items)
@@ -34,7 +34,7 @@ router.get('/', function(req, res) {
 
 router.get('/:id', function(req, res) {
     if (mode === "read-only") {
-      readFromFile("bin/cache", function(data) {
+      readFromFile("cache", function(data) {
         var items = JSON.parse(data),
             item = {};
 
