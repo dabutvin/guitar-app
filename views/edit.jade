@@ -5,7 +5,7 @@ block content
   p.words(ng-init="song= #{JSON.stringify(song)}")
         span.word(ng-repeat='word in song.words')
             span.note(ng-model='word.note',contenteditable) {{word.note}}
-            span.text(ng-model='word.text', ng-dblclick='word.note="A"', ng-right) {{word.text}}&nbsp;
+            span.text(ng-model='word.text', ng-dblclick='word.note="A"') {{word.text}}&nbsp;
   p
     a.btn.btn-primary.btn-lg(ng-click="save(song)") Save chord changes
   form(method="post",action="/update/#{song._id}")
