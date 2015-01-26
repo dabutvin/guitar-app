@@ -192,7 +192,7 @@ function writeToFile(path, data) {
 
 function readFromFile(path, callback) {
   fs.readFile(path, function (err, data) {
-    if (err) console.console.log(err.message);
+    if (err) console.log(err.message);
     callback(data);
   });
 }
