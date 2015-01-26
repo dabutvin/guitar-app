@@ -11,7 +11,7 @@ var mode = "read-only";
 /* GET home page. */
 router.get('/', function(req, res) {
   if (mode === "read-only") {
-    readFromFile("cache", function(items) {
+    readFromFile("bin/cache", function(items) {
       res.render('index',
         { title: 'Guitar Tabssss',
           songs: JSON.parse(items)
@@ -21,7 +21,7 @@ router.get('/', function(req, res) {
     req.db.collection('songs').find().toArray(function (err, items) {
       if(!err) {
         // update cache file
-        writeToFile("cache", JSON.stringify(items));
+        writeToFile("bin/cache", JSON.stringify(items));
       }
 
       res.render('index',
@@ -34,7 +34,7 @@ router.get('/', function(req, res) {
 
 router.get('/:id', function(req, res) {
     if (mode === "read-only") {
-      readFromFile("cache", function(data) {
+      readFromFile("bin/cache", function(data) {
         var items = JSON.parse(data),
             item = {};
 
