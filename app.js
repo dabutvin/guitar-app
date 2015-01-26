@@ -10,17 +10,13 @@ var users = require('./routes/users');
 
 var app = express();
 
-if (app.get('env') === 'development') {
-    var mongo = require('mongoskin');
-    var db = mongo.db("mongodb://localhost:27017/guitar", {native_parser:true});
-}
+var mongo = require('mongoskin');
+var db = mongo.db("mongodb://localhost:27017/guitar", {native_parser:true});
 
-if (app.get('env') === 'development') {
-    app.use(function(req,res,next){
-        req.db = db;
-        next();
-    });
-}
+app.use(function(req,res,next){
+    req.db = db;
+    next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
