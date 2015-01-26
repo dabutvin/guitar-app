@@ -32,31 +32,6 @@ router.get('/', function(req, res) {
   }
 });
 
-router.get('/:id', function(req, res) {
-    if (mode === "read-only") {
-      readFromFile("cache", function(data) {
-        var items = JSON.parse(data),
-            item = {};
-
-        for(var i=0; i<items.length; i++) {
-          if(items[i]._id === req.params.id) {
-            item = items[i];
-          }
-        }
-        res.render('detail',
-              { title: item.artist + " - " + item.title,
-                song: item });
-      });
-    } else {
-      var db = req.db;
-      db.collection('songs').findById(new ObjectID(req.params.id), function (err, item) {
-            res.render('detail',
-              { title: item.artist + " - " + item.title,
-                song: item });
-        });
-    }
-});
-
 router.get('/edit/:id', function(req, res) {
     var db = req.db;
     db.collection('songs').findById(new ObjectID(req.params.id), function (err, item) {
@@ -89,6 +64,31 @@ router.get('/new', function(req, res) {
           });
       }
     });
+});
+
+router.get('/:id', function(req, res) {
+    if (mode === "read-only") {
+      readFromFile("cache", function(data) {
+        var items = JSON.parse(data),
+            item = {};
+
+        for(var i=0; i<items.length; i++) {
+          if(items[i]._id === req.params.id) {
+            item = items[i];
+          }
+        }
+        res.render('detail',
+              { title: item.artist + " - " + item.title,
+                song: item });
+      });
+    } else {
+      var db = req.db;
+      db.collection('songs').findById(new ObjectID(req.params.id), function (err, item) {
+            res.render('detail',
+              { title: item.artist + " - " + item.title,
+                song: item });
+        });
+    }
 });
 
 router.post('/save', function(req, res) {
