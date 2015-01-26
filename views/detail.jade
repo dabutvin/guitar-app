@@ -1,0 +1,34 @@
+extends layout
+
+block content
+    div.row
+        div.col-md-3.col-md-offset-9
+            div.sidebar-nav-fixed
+                div.well
+                    ul.nav
+                        li.nav-header Controls
+                        li
+                            a(href='', ng-click='showVideo = !showVideo') {{ showVideo ? "Hide video" : "Show video"}}
+                        li
+                            a(href='', ng-click='isScrolling ? stopScroll() : startScroll()') {{ isScrolling ? "Stop scroll" : "Start scroll (" + scrollDuration/1000 + " sec)" }}
+                        li
+                            a(href='', ng-click='scrollDuration = scrollDuration + 1000') Increase scroll speed
+                        li
+                            a(href='', ng-click='scrollDuration = scrollDuration > 1000 ? scrollDuration - 1000 : scrollDuration') Decrease scroll speed
+                        li.nav-header Capo: {{ song.capo === 0 ? "none" : song.capo }}
+                        li
+                            a(href='', ng-click='song.capo = song.capo + 1') Move up
+                        li
+                            a(href='', ng-click='song.capo = song.capo > 0 ? song.capo - 1 : song.capo') Move down
+    div.row
+        div.col-md-10
+            h1= title
+            iframe(src='#{song.video}', width='420', height='315', frameborder='0', allowfullscreen, ng-show='showVideo')
+            p(ng-init='song.capo = #{song.capo}') Capo: {{ song.capo === 0 ? "none" : song.capo }}
+            p.words
+                each word in song.words
+                    span.word
+                        span.note #{word.note}
+                        span.text #{word.text}&nbsp;
+            p
+                a.btn.btn-primary.btn-lg(href='/') Home

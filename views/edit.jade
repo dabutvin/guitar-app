@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1= title
+  p.words(ng-init="song= #{JSON.stringify(song)}")
+        span.word(ng-repeat='word in song.words')
+            span.note(ng-model='word.note',contenteditable) {{word.note}}
+            span.text(ng-model='word.text', ng-dblclick='word.note="A"', ng-right) {{word.text}}&nbsp;
+  p
+    a.btn.btn-primary.btn-lg(ng-click="save(song)") Save chord changes
+  form(method="post",action="/update/#{song._id}")
+    p
+        label(for='artist') artist
+    p
+        input#artist(type="text", placeholder="artist", name="artist", value="{{ song.artist }}")
+    p
+        label(for='title') title
+    p
+        input#title(type="text", placeholder="title", name="title", value="{{ song.title }}")
+    p
+        label(for='video') video
+    p
+        input#video(type="text", placeholder="video", name="video", value="{{ song.video }}")
+    p
+        label(for='capo') capo
+    p
+        input#capo(type="text", placeholder="capo", name="capo", value="{{ song.capo }}")
+    p
+        input.btn.btn-primary.btn-lg(type='submit', value='Update meta')
+  pre
+    {{song | json}}

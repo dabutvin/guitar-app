@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  p This is a song:
+  p.words(ng-init="words= #{JSON.stringify(words)}")
+        span.word(ng-repeat='word in words')
+            span.note(ng-model='word.note',contenteditable) {{word.note}}
+            span.text(ng-model='word.text', ng-dblclick='word.note="A"') {{word.text}}&nbsp;
+  p
+    a.btn.btn-primary.btn-lg(ng-click="save(words)") Save
+    a.btn.btn-primary.btn-lg(href='editlyrics') Edit lyrics
+  pre
+    {{words | json}}
